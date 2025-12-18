@@ -406,7 +406,22 @@
           <span class="pill">abrir agora 💞</span>
         </a>
       </nav>
-
+ <audio id="bgAudio" preload="auto"></audio>
+  <button id="audioBtn" type="button" style="
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 9999;
+  border: 1px solid rgba(255,90,168,.35);
+  background: rgba(255,255,255,.85);
+  color: #2a1530;
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+">
+  Ativar som 🎵
+</button>
       
 
       <footer>
@@ -434,6 +449,54 @@
     }
 
     document.addEventListener("DOMContentLoaded", showGifts);
+
+    const bgAudio = document.getElementById("bgAudio");
+const audioBtn = document.getElementById("audioBtn");
+
+const playlist = ["a5_danca.mp3", "a2_hand.mp3", "a3_cera.mp3","a4_michele",  "a4_barao.mp3", "a1.mp3"];
+let track = 0;
+
+function loadTrack() {
+  bgAudio.src = playlist[track];
+  bgAudio.load();
+}
+
+function setBtnLabel() {
+  audioBtn.textContent = bgAudio.paused ? "Ativar som 🎵" : "Pausar som 🔇";
+}
+
+async function startAudio() {
+  try {
+    bgAudio.volume = 0.25;
+    if (!bgAudio.src) loadTrack();
+    await bgAudio.play();
+    setBtnLabel();
+  } catch (e) {
+    setBtnLabel();
+  }
+}
+
+bgAudio.addEventListener("ended", () => {
+  track = (track + 1) % playlist.length;
+  loadTrack();
+  bgAudio.play().catch(() => {});
+});
+
+audioBtn.addEventListener("click", async () => {
+  if (bgAudio.paused) await startAudio();
+  else { bgAudio.pause(); setBtnLabel(); }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  setBtnLabel();
+  const once = async () => {
+    await startAudio();
+    document.removeEventListener("click", once);
+    document.removeEventListener("touchstart", once);
+  };
+  document.addEventListener("click", once);
+  document.addEventListener("touchstart", once);
+});
   </script>
 </body>
 </html>
