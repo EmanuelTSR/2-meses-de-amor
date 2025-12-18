@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Presente 2</title>
+
+  <style>
+    :root{
+      --pink-1:#ffd1e6;
+      --pink-2:#ff9fca;
+      --pink-3:#ff5aa8;
+      --ink:#2a1530;
+      --card:#ffffffd9;
+      --shadow: 0 18px 40px rgba(30, 0, 40, .18);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 600px at 20% 15%, #fff7fb 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, #ffe6f3 0%, transparent 60%),
+        linear-gradient(180deg, var(--pink-1), var(--pink-2));
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px 40px;
+    }
+
+    .card{
+      width:min(980px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, .7);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 22px 18px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing:-.02em;
+    }
+
+    .sub{
+      margin: 6px 0 0;
+      opacity:.85;
+      font-size: 13.5px;
+      line-height: 1.25rem;
+    }
+
+    .pill{
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255, 90, 168, .12);
+      border: 1px solid rgba(255, 90, 168, .22);
+      font-size: 12.5px;
+      font-weight: 650;
+      user-select:none;
+      height: fit-content;
+    }
+
+    .stage{
+      border-radius: 22px;
+      background:
+        radial-gradient(500px 220px at 50% 30%, rgba(255,255,255,.85), rgba(255,255,255,.35)),
+        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.15));
+      border: 1px solid rgba(255,255,255,.55);
+      padding: 16px;
+      display:flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .videoShell{
+      width:min(860px, 100%);
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: 0 16px 30px rgba(30,0,40,.18);
+      position: relative;
+    }
+
+    video{
+      width:100%;
+      height:100%;
+      display:block;
+      background: #000;
+    }
+
+    .msg{
+      width:min(860px, 100%);
+      background: rgba(255,255,255,.80);
+      border: 1px solid rgba(255, 90, 168, .22);
+      border-radius: 18px;
+      padding: 16px 16px;
+      text-align:center;
+      box-shadow: 0 12px 24px rgba(30,0,40,.10);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .6s ease, transform .6s ease;
+      display:none;
+    }
+
+    .msg.show{
+      display:block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .msg h2{
+      margin: 0 0 8px;
+      font-size: clamp(18px, 2.3vw, 24px);
+      letter-spacing: -.01em;
+    }
+
+    .msg p{
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.35rem;
+      opacity:.9;
+    }
+
+    .cta{
+      margin-top: 10px;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .back{
+      margin-top: 10px;
+      text-align:center;
+      opacity:.85;
+      font-size: 13px;
+    }
+
+    .back a{
+      color: var(--ink);
+      font-weight: 750;
+      text-decoration:none;
+      border-bottom: 2px solid rgba(255,90,168,.35);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .msg{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-label="Presente 2">
+      <header>
+        <div>
+          <h1>Presente 2</h1>
+          <p class="sub">Assiste até o final, tem uma mensagem pra você 💗</p>
+        </div>
+        <div class="pill">I fell harder</div>
+      </header>
+
+      <section class="stage" aria-label="Vídeo e mensagem final">
+        <div class="videoShell">
+          <!-- Coloque seu vídeo aqui -->
+          <!-- Opção A: arquivo local (recomendado) -->
+          <video id="vid" controls playsinline preload="metadata">
+            <source src="love.mp4" type="video/mp4" />
+            Seu navegador não suporta vídeo HTML5.
+          </video>
+
+          <!-- Opção B: se for usar link direto (mp4), troque o src acima -->
+        </div>
+
+        <div class="msg" id="msg">
+          <h2 id="msgTitle">She fell first, he falls harder.</h2>
+     <p id="msgText">
+  Lembra quando você me mandou esse vídeo no TikTok?<br> 
+  Desde aquele dia, nunca mais esqueci essa frase, e hoje eu entendo perfeitamente o que ela significa.
+  <br><br>
+  De algum jeito, você apareceu na minha vida e, desde então, sou grato todos os dias por isso.
+  Você transformou meus dias, mudou minha vida para melhor e despertou um amor que estava escondido
+  no meu coração. Um amor sincero, calmo e profundo, que cresce a cada instante.
+  <br><br>
+  Obrigado por ser quem você é, por me fazer sentir assim e por caminhar ao meu lado.
+  Essa chama que sinto por você nunca vai se apagar.
+  Feliz 2 meses para nós 🤍
+</p>
+
+<div class="cta">
+  Agora vou parar de enrolação e deixar você pode abrir o seu presente.
+</div>
+
+
+        <div class="back">
+          <a href="index.html">Voltar para a home</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const vid = document.getElementById("vid");
+    const msg = document.getElementById("msg");
+
+    function showMessage() {
+      msg.classList.add("show");
+    }
+
+    // Mostra quando o vídeo termina
+    vid.addEventListener("ended", showMessage);
+
+    // Caso o vídeo seja pulado até o fim, também mostra
+    vid.addEventListener("timeupdate", () => {
+      if (!vid.duration || !isFinite(vid.duration)) return;
+      if (vid.currentTime >= vid.duration - 0.25) showMessage();
+    });
+  </script>
+</body>
+</html>

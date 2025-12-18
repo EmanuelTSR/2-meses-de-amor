@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Presente 3</title>
+
+  <style>
+    :root{
+      --pink-1:#ffd1e6;
+      --pink-2:#ff9fca;
+      --pink-3:#ff5aa8;
+      --ink:#2a1530;
+      --card:#ffffffd9;
+      --shadow: 0 18px 40px rgba(30, 0, 40, .18);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 600px at 20% 15%, #fff7fb 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, #ffe6f3 0%, transparent 60%),
+        linear-gradient(180deg, var(--pink-1), var(--pink-2));
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px 40px;
+    }
+
+    .card{
+      width:min(980px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, .7);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 22px 18px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing:-.02em;
+    }
+
+    .sub{
+      margin: 6px 0 0;
+      opacity:.85;
+      font-size: 13.5px;
+      line-height: 1.25rem;
+    }
+
+    .pill{
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255, 90, 168, .12);
+      border: 1px solid rgba(255, 90, 168, .22);
+      font-size: 12.5px;
+      font-weight: 650;
+      user-select:none;
+      height: fit-content;
+    }
+
+    .stage{
+      border-radius: 22px;
+      background:
+        radial-gradient(500px 220px at 50% 30%, rgba(255,255,255,.85), rgba(255,255,255,.35)),
+        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.15));
+      border: 1px solid rgba(255,255,255,.55);
+      padding: 16px;
+      min-height: min(560px, 72vh);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .frame{
+      width:min(900px, 100%);
+      height: min(520px, 70vh);
+      position:relative;
+    }
+
+    .photo{
+      position:absolute;
+      width: min(320px, 44vw);
+      max-width: 360px;
+      aspect-ratio: 4 / 5;
+      border-radius: 18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: 0 18px 34px rgba(30,0,40,.18);
+      opacity: 0;
+      will-change: transform, opacity;
+
+      transform: translate(0,0) rotate(0deg) scale(.95);
+      transition: transform .85s cubic-bezier(.22, .9, .22, 1), opacity 2.00s ease;
+    }
+
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      background: rgba(255,255,255,.55);
+    }
+
+    /* posições finais (cantos) */
+    .p1.final{ top: 14px; left: 14px; transform: translate(0,0) rotate(-3deg) scale(1); }
+    .p2.final{ top: 14px; right: 14px; transform: translate(0,0) rotate(3deg) scale(1); }
+    .p3.final{ bottom: 14px; left: 14px; transform: translate(0,0) rotate(2deg) scale(1); }
+    .p4.final{ bottom: 14px; right: 14px; transform: translate(0,0) rotate(-2deg) scale(1); }
+
+    /* ponto de entrada (fora da tela) */
+    .p1.enter{ transform: translate(-120%, -120%) rotate(-18deg) scale(.9); }
+    .p2.enter{ transform: translate(120%, -120%) rotate(18deg) scale(.9); }
+    .p3.enter{ transform: translate(-120%, 120%) rotate(18deg) scale(.9); }
+    .p4.enter{ transform: translate(120%, 120%) rotate(-18deg) scale(.9); }
+
+    .photo.show{ opacity: 1; }
+
+    .message{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%, -50%) scale(.98);
+      width: min(560px, 92%);
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(255, 90, 168, .24);
+      border-radius: 20px;
+      padding: 16px 16px;
+      text-align:center;
+      box-shadow: 0 16px 30px rgba(30,0,40,.12);
+      z-index: 5;
+      opacity: 0;
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .message.show{
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .message p{
+      margin:0;
+      font-size: 15.5px;
+      line-height: 1.45rem;
+      font-weight: 650;
+      letter-spacing: -.01em;
+    }
+
+    .track{
+      margin-top: 12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      color: var(--ink);
+      background: rgba(255, 90, 168, .14);
+      border: 1px solid rgba(255, 90, 168, .26);
+      font-weight: 850;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+
+    .track:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(30,0,40,.12);
+      border-color: rgba(255, 90, 168, .42);
+    }
+
+    .err{
+      position:absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(255, 90, 168, .28);
+      box-shadow: 0 12px 24px rgba(30,0,40,.10);
+      font-size: 13px;
+      display:none;
+      z-index: 20;
+    }
+    .err.show{ display:block; }
+
+    .back{
+      margin-top: 14px;
+      text-align:center;
+      opacity:.85;
+      font-size: 13px;
+    }
+
+    .back a{
+      color: var(--ink);
+      font-weight: 750;
+      text-decoration:none;
+      border-bottom: 2px solid rgba(255,90,168,.35);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-label="Presente 3">
+      <header>
+        <div>
+          <h1>Presente 3</h1>
+          <p class="sub">Quatro fotos, uma mensagem e um presentinho a caminho 💗</p>
+        </div>
+        <div class="pill">Voando 🪽</div>
+      </header>
+
+      <section class="stage" aria-label="Fotos voando e mensagem">
+        <div class="frame" id="frame">
+
+          <!-- Coloque as imagens na mesma pasta e confira se o nome é idêntico -->
+          <div class="photo p1 enter" id="p1"><img src="make1.png" alt="Foto 1"></div>
+          <div class="photo p2 enter" id="p2"><img src="make4.png" alt="Foto 2"></div>
+          <div class="photo p3 enter" id="p3"><img src="make3.png" alt="Foto 3"></div>
+          <div class="photo p4 enter" id="p4"><img src="make2.png" alt="Foto 4"></div>
+
+          <div class="message" id="msg" aria-label="Mensagem">
+            <p>
+              Sempre que te dou maquiagem, sinto que estou trapaceando é como se estivesse me dando um presente. Ver você toda maquiada, linda desse jeito, é o suprassumo da minha existência.
+              <br><br>
+              Eu queria que esse presente voasse até você tão rápido quanto o meu amor, mas infelizmente a Amazon não funciona assim. Ainda assim, aqui está o link para você acompanhar, e eu prometo: ele vai chegar… e não vai ser o único.
+            </p>
+
+            <a class="track" href="https://www.amazon.com.br/gp/your-account/ship-track?itemId=jksjrvmtrrlovsp&ref=ppx_yo2ov_dt_b_track_package&packageIndex=0&orderId=702-3356577-3626614&shipmentId=Dv45nYSwM" target="_blank" rel="noopener">
+              Acompanhar rastreio do presente 🎁
+            </a>
+          </div>
+
+          <div class="err" id="err"></div>
+        </div>
+      </section>
+
+      <div class="back">
+        <a href="index.html">Voltar para a home</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const photos = [
+      { wrapId: "p1", file: "make1.png" },
+      { wrapId: "p2", file: "make2.png" },
+      { wrapId: "p3", file: "make3.png" },
+      { wrapId: "p4", file: "make4.png" },
+    ];
+
+    const msg = document.getElementById("msg");
+    const err = document.getElementById("err");
+
+    function showError(text){
+      err.textContent = text;
+      err.classList.add("show");
+    }
+
+    function flyIn(el, delayMs){
+      setTimeout(() => {
+        el.classList.add("show");
+        requestAnimationFrame(() => {
+          void el.offsetWidth;
+          el.classList.add("final");
+          el.classList.remove("enter");
+        });
+      }, delayMs);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // checa carregamento das imagens e acusa o arquivo que falhou
+      for (const p of photos){
+        const wrap = document.getElementById(p.wrapId);
+        const img = wrap.querySelector("img");
+        img.addEventListener("error", () => {
+          showError(`Arquivo não encontrado: ${p.file}. Confere se ele está na mesma pasta e se o nome é idêntico (maiúsculas e extensão).`);
+        });
+      }
+
+      // anima
+      flyIn(document.getElementById("p1"), 300);
+flyIn(document.getElementById("p2"), 1400);
+flyIn(document.getElementById("p3"), 2500);
+flyIn(document.getElementById("p4"), 3600);
+
+setTimeout(() => msg.classList.add("show"), 4600);
+    });
+  </script>
+</body>
+</html>

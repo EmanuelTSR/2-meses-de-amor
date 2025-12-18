@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para o meu amor</title>
+
+  <style>
+    :root{
+      --pink-1:#ffd1e6;
+      --pink-2:#ff9fca;
+      --pink-3:#ff5aa8;
+      --ink:#2a1530;
+      --card:#ffffffcc;
+      --shadow: 0 18px 40px rgba(30, 0, 40, .18);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 600px at 20% 15%, #fff7fb 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, #ffe6f3 0%, transparent 60%),
+        linear-gradient(180deg, var(--pink-1), var(--pink-2));
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px 16px;
+    }
+
+    .card{
+      width:min(980px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, .7);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px 22px 22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .sparkles{
+      position:absolute;
+      inset:-40px;
+      pointer-events:none;
+      opacity:.55;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+        radial-gradient(circle at 30% 80%, rgba(255,255,255,.8) 0 1.8px, transparent 3px),
+        radial-gradient(circle at 70% 35%, rgba(255,255,255,.85) 0 2.2px, transparent 3px),
+        radial-gradient(circle at 85% 75%, rgba(255,255,255,.8) 0 2px, transparent 3px),
+        radial-gradient(circle at 55% 55%, rgba(255,255,255,.75) 0 1.6px, transparent 3px);
+      filter: blur(.2px);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:10px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(255, 90, 168, .25);
+      font-weight: 650;
+    }
+
+    .badge .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--pink-3);
+      box-shadow: 0 0 0 6px rgba(255,90,168,.18);
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing: -.02em;
+    }
+
+    .sub{
+      margin:6px 0 0;
+      opacity:.85;
+      font-size: 14.5px;
+    }
+
+    .stage{
+      margin-top: 18px;
+      height: min(360px, 58vh);
+      border-radius: 22px;
+      background:
+        radial-gradient(500px 220px at 50% 30%, rgba(255,255,255,.85), rgba(255,255,255,.35)),
+        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.15));
+      border: 1px solid rgba(255,255,255,.55);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .ground{
+      position:absolute;
+      bottom:-40px;
+      left:-40px;
+      right:-40px;
+      height: 160px;
+      background: radial-gradient(800px 160px at 50% 10%, rgba(255,90,168,.25), transparent 70%);
+      filter: blur(0.2px);
+    }
+
+    .characters{
+      position:relative;
+      width:min(760px, 96%);
+      height: 260px;
+    }
+
+    .cat, .dog{
+      position:absolute;
+      bottom: 6px;
+      width: 190px;
+      height: 190px;
+      display:grid;
+      place-items:center;
+      transform: translateX(0);
+      animation-duration: 3.2s;
+      animation-timing-function: cubic-bezier(.22, .8, .22, 1);
+      animation-fill-mode: forwards;
+      will-change: transform;
+      z-index: 6; /* ALTERADO: garante camada */
+    }
+
+    .cat{ left: 0; animation-name: catWalk; }
+    .dog{ right: 0; animation-name: dogWalk; }
+
+    @keyframes catWalk{
+      0%{ transform: translateX(0); }
+      70%{ transform: translateX(220px); }
+      100%{ transform: translateX(240px); }
+    }
+    @keyframes dogWalk{
+      0%{ transform: translateX(0); }
+      70%{ transform: translateX(-220px); }
+      100%{ transform: translateX(-240px); }
+    }
+
+    .label{
+      position:absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255,90,168,.22);
+      font-weight: 600;
+      font-size: 14px;
+      text-align:center;
+      backdrop-filter: blur(6px);
+      z-index: 8;
+    }
+
+    .heart{
+      position:absolute;
+      left:50%;
+      bottom: 96px;
+      transform: translateX(-50%) scale(.4);
+      opacity:0;
+      transition: opacity .6s ease, transform .6s ease;
+      filter: drop-shadow(0 10px 20px rgba(255, 0, 120, .25));
+      z-index: 10; /* ALTERADO: fica acima dos bichinhos */
+    }
+
+    .heart.show{
+      opacity:1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .links{
+      margin-top: 18px;
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .7s ease, transform .7s ease;
+      position: relative; /* ALTERADO */
+      z-index: 12;        /* ALTERADO */
+    }
+
+    .links.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    a.gift{
+      flex: 1 1 220px;
+      text-decoration:none;
+      color: var(--ink);
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(255, 90, 168, .28);
+      border-radius: 18px;
+      padding: 14px 14px;
+      box-shadow: 0 10px 20px rgba(30,0,40,.08);
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    a.gift:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(30,0,40,.12);
+      border-color: rgba(255, 90, 168, .45);
+    }
+
+    .gift .title{
+      font-weight: 750;
+      margin:0 0 4px;
+      letter-spacing: -.01em;
+    }
+
+    .gift .desc{
+      margin:0;
+      font-size: 13.5px;
+      opacity:.85;
+      line-height: 1.25rem;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 90, 168, .12);
+      border: 1px solid rgba(255, 90, 168, .22);
+      font-size: 12.5px;
+      font-weight: 650;
+    }
+
+    footer{
+      margin-top: 14px;
+      font-size: 12.5px;
+      opacity:.8;
+      text-align:center;
+    }
+
+    .cat svg, .dog svg{ width: 190px; height: 190px; }
+
+    @media (prefers-reduced-motion: reduce){
+      .cat, .dog{ animation: none; }
+      .heart, .links{ transition: none; }
+      .heart{ opacity:1; transform: translateX(-50%) scale(1); }
+      .links{ opacity:1; transform:none; }
+    }
+
+    .bonus{
+  margin-top: 10px;
+  text-align: center;
+  opacity: .55;
+  font-size: 12.5px;
+}
+
+.bonus a{
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed rgba(255,90,168,.45);
+  transition: opacity .15s ease, border-color .15s ease;
+}
+
+.bonus a:hover{
+  opacity: 1;
+  border-color: rgba(255,90,168,.8);
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-label="Home page de presente">
+      <div class="sparkles" aria-hidden="true"></div>
+
+      <header>
+        <div>
+          <h1>Um pedacinho do meu coração para você</h1>
+          <p class="sub">Quando a gatinha e o golden se encontram, aparecem seus presentes</p>
+        </div>
+        <div class="badge" aria-label="feito com amor">
+          <span class="dot" aria-hidden="true"></span>
+          2 meses
+        </div>
+      </header>
+
+      <section class="stage" aria-label="Animação dos personagens">
+        <div class="label">Bem-vinda, meu amor 💗</div>
+        <div class="ground" aria-hidden="true"></div>
+
+        <div class="characters">
+          <div class="cat" aria-label="Gatinha preta andando">
+            <svg viewBox="0 0 200 200" role="img" aria-label="Gatinha preta">
+              <defs>
+                <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity=".18"/>
+                </filter>
+              </defs>
+
+              <g filter="url(#softShadow)">
+                <ellipse cx="95" cy="125" rx="52" ry="42" fill="#111"/>
+                <ellipse cx="95" cy="125" rx="40" ry="30" fill="#1a1a1a" opacity=".65"/>
+                <path d="M130 135 C 165 135, 170 165, 140 170"
+                      fill="none" stroke="#111" stroke-width="16" stroke-linecap="round"/>
+                <circle cx="78" cy="85" r="34" fill="#111"/>
+                <path d="M55 78 L42 50 L70 62 Z" fill="#111"/>
+                <path d="M98 78 L112 50 L85 62 Z" fill="#111"/>
+                <ellipse cx="64" cy="95" rx="10" ry="8" fill="#1d1d1d"/>
+                <circle cx="57" cy="86" r="5" fill="#fff"/>
+                <circle cx="85" cy="86" r="5" fill="#fff"/>
+                <circle cx="58" cy="86" r="2.2" fill="#111"/>
+                <circle cx="86" cy="86" r="2.2" fill="#111"/>
+                <path d="M58 98 H30" stroke="#fff" stroke-width="2" opacity=".7"/>
+                <path d="M60 103 H28" stroke="#fff" stroke-width="2" opacity=".55"/>
+                <path d="M70 98 H100" stroke="#fff" stroke-width="2" opacity=".7"/>
+                <path d="M70 103 H102" stroke="#fff" stroke-width="2" opacity=".55"/>
+                <ellipse cx="70" cy="155" rx="16" ry="10" fill="#111"/>
+                <ellipse cx="108" cy="155" rx="16" ry="10" fill="#111"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="dog" aria-label="Cachorro golden andando">
+            <svg viewBox="0 0 200 200" role="img" aria-label="Cachorro golden">
+              <defs>
+                <filter id="softShadow2" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity=".18"/>
+                </filter>
+              </defs>
+
+              <g filter="url(#softShadow2)">
+                <ellipse cx="105" cy="128" rx="58" ry="44" fill="#f2b64a"/>
+                <ellipse cx="105" cy="128" rx="44" ry="32" fill="#eaa63b" opacity=".75"/>
+                <path d="M150 130 C 176 120, 182 92, 160 84"
+                      fill="none" stroke="#f2b64a" stroke-width="16" stroke-linecap="round"/>
+                <circle cx="120" cy="86" r="34" fill="#f2b64a"/>
+                <path d="M140 92 C 158 100, 158 130, 135 128" fill="#e6a235"/>
+                <path d="M108 92 C 90 100, 92 130, 112 128" fill="#e6a235"/>
+                <ellipse cx="134" cy="100" rx="16" ry="12" fill="#eaa63b"/>
+                <circle cx="114" cy="82" r="5" fill="#fff"/>
+                <circle cx="134" cy="82" r="5" fill="#fff"/>
+                <circle cx="115" cy="82" r="2.2" fill="#111"/>
+                <circle cx="135" cy="82" r="2.2" fill="#111"/>
+                <circle cx="146" cy="94" r="5" fill="#111"/>
+                <path d="M142 104 C 130 114, 118 110, 112 102"
+                      fill="none" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="82" cy="160" rx="18" ry="11" fill="#f2b64a"/>
+                <ellipse cx="122" cy="160" rx="18" ry="11" fill="#f2b64a"/>
+              </g>
+            </svg>
+          </div>
+
+          <svg class="heart" id="heart" width="120" height="110" viewBox="0 0 120 110" aria-label="Coração">
+            <path d="M60 104
+                     C20 78, 6 58, 10 38
+                     C14 18, 32 10, 46 18
+                     C54 22, 58 30, 60 34
+                     C62 30, 66 22, 74 18
+                     C88 10, 106 18, 110 38
+                     C114 58, 100 78, 60 104 Z"
+                  fill="#ff2f92"/>
+          </svg>
+        </div>
+      </section>
+
+      <nav class="links" id="links" aria-label="Links de presentes">
+        <a class="gift" href="presente1.html">
+          <p class="title">Presente 1</p>
+          <p class="desc">Abra quando estiver pronta para ver todos as datas que carrego no meu coração.</p>
+          <span class="pill">abrir agora 💝</span>
+        </a>
+
+        <a class="gift" href="presente2.html">
+          <p class="title">Presente 2</p>
+          <p class="desc">Abra quando estiver com o presente em mãos.</p>
+          <span class="pill">abrir agora 💗</span>
+        </a>
+
+        <a class="gift" href="presente3.html">
+          <p class="title">Presente 3</p>
+          <p class="desc">Cuidado ao abrir risco de beleza extrema !!!</p>
+          <span class="pill">abrir agora 💞</span>
+        </a>
+      </nav>
+
+      
+
+      <footer>
+    
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    function showGifts() {
+      const heart = document.getElementById("heart");
+      const links = document.getElementById("links");
+
+      if (!heart || !links) return;
+
+      const walkTimeMs = 3200;
+
+      setTimeout(() => {
+        heart.classList.add("show");
+      }, Math.floor(walkTimeMs * 0.78));
+
+      setTimeout(() => {
+        links.classList.add("show");
+      }, walkTimeMs + 200);
+    }
+
+    document.addEventListener("DOMContentLoaded", showGifts);
+  </script>
+</body>
+</html>

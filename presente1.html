@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Presente 1</title>
+
+  <style>
+    :root{
+      --pink-1:#ffd1e6;
+      --pink-2:#ff9fca;
+      --pink-3:#ff5aa8;
+      --ink:#2a1530;
+      --card:#ffffffd9;
+      --shadow: 0 18px 40px rgba(30, 0, 40, .18);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 600px at 20% 15%, #fff7fb 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, #ffe6f3 0%, transparent 60%),
+        linear-gradient(180deg, var(--pink-1), var(--pink-2));
+    }
+
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px 40px;
+    }
+
+    .card{
+      width:min(980px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, .7);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 22px 18px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(22px, 3vw, 34px);
+      letter-spacing:-.02em;
+    }
+
+    .hint{
+      margin: 6px 0 0;
+      opacity:.85;
+      font-size: 13.5px;
+      line-height: 1.25rem;
+    }
+
+    .pill{
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255, 90, 168, .12);
+      border: 1px solid rgba(255, 90, 168, .22);
+      font-size: 12.5px;
+      font-weight: 650;
+      user-select:none;
+    }
+
+    .stage{
+      border-radius: 22px;
+      background:
+        radial-gradient(500px 220px at 50% 30%, rgba(255,255,255,.85), rgba(255,255,255,.35)),
+        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.15));
+      border: 1px solid rgba(255,255,255,.55);
+      padding: 16px;
+      min-height: min(520px, 70vh);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .single{
+      width: min(720px, 100%);
+      text-align:center;
+      transition: transform .25s ease, opacity .25s ease;
+    }
+
+    figure{
+      margin: 0;
+    }
+
+   img{
+  width:100%;
+  height: 56vh;
+  max-height: 56vh;
+  object-fit: contain;
+  border-radius: 18px;
+  box-shadow: 0 16px 30px rgba(30,0,40,.18);
+  border: 1px solid rgba(255,255,255,.75);
+  background: rgba(255,255,255,.6);
+}
+
+
+    figcaption{
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: 750;
+      letter-spacing: -.01em;
+    }
+
+    .counter{
+      margin-top: 6px;
+      font-size: 13px;
+      opacity:.8;
+    }
+
+    .overlayClick{
+      position:absolute;
+      inset:0;
+      cursor:pointer;
+    }
+
+    .done{
+      display:none;
+      width:100%;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tile{
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255, 90, 168, .22);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 0 12px 24px rgba(30,0,40,.10);
+    }
+
+    .tile img{
+  width: 100%;
+  height: 240px;
+  max-height: 240px;
+  object-fit: contain;
+  box-shadow: none;
+  background: rgba(255,255,255,.6);
+}
+
+
+    .tile .date{
+      margin-top: 10px;
+      font-weight: 750;
+      text-align:center;
+    }
+
+    .back{
+      margin-top: 14px;
+      text-align:center;
+      opacity:.85;
+      font-size: 13px;
+    }
+
+    .back a{
+      color: var(--ink);
+      font-weight: 750;
+      text-decoration:none;
+      border-bottom: 2px solid rgba(255,90,168,.35);
+    }
+
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tile img{ max-height: 220px; }
+    }
+
+    @media (max-width: 520px){
+      .grid{ grid-template-columns: 1fr; }
+      img{ max-height: 52vh; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .single{ transition:none; }
+    }
+    .photoText{
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  opacity: .9;
+}
+
+.tileText{
+  margin-top: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: center;
+  opacity: .9;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-label="Presente 1">
+      <header>
+        <div>
+          <h1>As datas do nosso amor.</h1>
+          <p class="hint">Clique em qualquer lugar para revelar a próxima lembrança 💗</p>
+        </div>
+        <div class="pill" id="pill">1 de 6</div>
+      </header>
+
+      <section class="stage" id="stage" aria-label="Sequência de fotos">
+        <div class="overlayClick" id="overlay" aria-label="Clique para avançar"></div>
+
+        <div class="single" id="single">
+          <figure>
+            <img id="photo" src="" alt="Foto do casal" />
+            <div class="photoText" id="photoText"></div>
+            <figcaption id="date">Data</figcaption>
+          </figure>
+          <div class="counter" id="counter">Clique para continuar</div>
+        </div>
+
+        <div class="done" id="done" aria-label="Todas as fotos">
+          <div class="grid" id="grid"></div>
+          <div class="back">
+            <a href="index.html">Voltar para a home</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Troque os nomes dos arquivos e as datas aqui
+    // Coloque as 6 imagens na mesma pasta do presente1.html
+   const photos = [
+  { src: "primeiro_co.png", date: "08/06/2025", text: "Nosso primeiro contato, quando tudo começou" },
+  { src: "primeiro_encontro.jpeg", date: "19/06/2025", text: "O dia que jamais vou esquecer, nosso primeiro encontro" },
+  { src: "primeira_pais.jpeg", date: "14/09/2025", text: "Primeira vez que você viu meu pai e pouco tempo antes eu tinha conhecido a sua, a verdade é que já estava namorando kkkkk" },
+  { src: "primeiro_lingua.jpeg", date: "23/09/2025", text: "Nosso primeiro beijo  de lingua ou quase isso (o melhor que eu já dei na vida)" },
+  { src: "primeira_dormir.jpeg", date: "11/10/2025", text: "Primeiro final de semana que passamos juntos, o melhor sono da minha vida" },
+  { src: "primeiro_namoro.jpeg", date: "18/10/2025", text: "O dia em que viramos oficialmente nós" },
+
+];
+
+
+    const photoEl = document.getElementById("photo");
+    const dateEl = document.getElementById("date");
+    const overlay = document.getElementById("overlay");
+    const single = document.getElementById("single");
+    const done = document.getElementById("done");
+    const grid = document.getElementById("grid");
+    const pill = document.getElementById("pill");
+    const counter = document.getElementById("counter");
+
+    let i = 0;
+
+    function renderCurrent() {
+  const item = photos[i];
+  photoEl.src = item.src;
+  dateEl.textContent = item.date;
+  photoTextEl.textContent = item.text;
+  pill.textContent = `${i + 1} de ${photos.length}`;
+}
+
+
+    function buildGrid() {
+      grid.innerHTML = "";
+      for (const item of photos) {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = "Foto";
+
+        const t = document.createElement("div");
+        t.className = "tileText";
+        t.textContent = item.text;
+
+        
+        const d = document.createElement("div");
+        d.className = "date";
+        d.textContent = item.date;
+
+        tile.appendChild(img);
+        tile.appendChild(d);
+        grid.appendChild(tile);
+        tile.appendChild(img);
+        tile.appendChild(t);
+        tile.appendChild(d);
+
+      }
+    }
+
+    function next() {
+      if (i < photos.length - 1) {
+        i += 1;
+        single.style.opacity = "0";
+        single.style.transform = "translateY(6px)";
+
+        setTimeout(() => {
+          renderCurrent();
+          single.style.opacity = "1";
+          single.style.transform = "translateY(0)";
+        }, 180);
+
+        if (i === photos.length - 1) {
+          counter.textContent = "Mais um clique e você vê tudo juntinho ✨";
+        }
+        return;
+      }
+
+      // terminou: mostra todas lado a lado
+      overlay.style.display = "none";
+      single.style.display = "none";
+      pill.textContent = "Datas que vão ficar pra sempre no meu coração 💞";
+      buildGrid();
+      done.style.display = "block";
+    }
+    const photoTextEl = document.getElementById("photoText");
+
+    // inicia
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCurrent();
+      overlay.addEventListener("click", next);
+      // também avança clicando na foto, por garantia
+      single.addEventListener("click", next);
+    });
+  </script>
+</body>
+</html>
