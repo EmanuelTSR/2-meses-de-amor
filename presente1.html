@@ -249,17 +249,35 @@
       </section>
     </main>
   </div>
+  <audio id="bgAudio" preload="auto"></audio>
+  <button id="audioBtn" type="button" style="
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 9999;
+  border: 1px solid rgba(255,90,168,.35);
+  background: rgba(255,255,255,.85);
+  color: #2a1530;
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+">
+  Ativar som 🎵
+</button>
+
+  
 
   <script>
     // Troque os nomes dos arquivos e as datas aqui
     // Coloque as 6 imagens na mesma pasta do presente1.html
    const photos = [
-  { src: "primeiro_co.png", date: "08/06/2025", text: "Nosso primeiro contato, quando tudo começou" },
-  { src: "primeiro_encontro.jpeg", date: "19/06/2025", text: "O dia que jamais vou esquecer, nosso primeiro encontro" },
-  { src: "primeira_pais.jpeg", date: "14/09/2025", text: "Primeira vez que você viu meu pai e pouco tempo antes eu tinha conhecido a sua, a verdade é que já estava namorando kkkkk" },
-  { src: "primeiro_lingua.jpeg", date: "23/09/2025", text: "Nosso primeiro beijo  de lingua ou quase isso (o melhor que eu já dei na vida)" },
-  { src: "primeira_dormir.jpeg", date: "11/10/2025", text: "Primeiro final de semana que passamos juntos, o melhor sono da minha vida" },
-  { src: "primeiro_namoro.jpeg", date: "18/10/2025", text: "O dia em que viramos oficialmente nós" },
+  { src: "primeiro_co.png", date: "08/06/2025", text: "Nosso primeiro contato, quando tudo começou de um jeito simples e sem eu nem imaginar até onde isso me levaria" },
+  { src: "primeiro_encontro.jpeg", date: "19/06/2025", text: "O dia que jamais vou esquecer, nosso primeiro encontro, quando o meu coração bateu mais forte e minha mão tremeu, ali eu tive certeza que algo especial estava nascendo" },
+  { src: "primeira_pais.jpeg", date: "14/09/2025", text: "A  primeira vez que você viu meu pai e pouco antes eu tinha conhecido a sua mãe, sem perceber, a gente já estava namorando" },
+  { src: "primeiro_lingua.jpeg", date: "23/09/2025", text: "Nosso primeiro beijo de língua, ou quase isso, desajeitado e intenso, a mistura de sentimentos que senti nesse dia é indescritivel" },
+  { src: "primeira_dormir.jpeg", date: "11/10/2025", text: "O primeiro final de semana que passamos juntos, onde ficar ao seu lado virou o meu vicio e a coisa que mais quero fazer nessa vida." },
+  { src: "primeiro_namoro.jpeg", date: "18/10/2025", text: "O dia em que deixamos de ser apenas dois e viramos oficialmente nós, o começo da nossa história do jeito mais bonito" },
 
 ];
 
@@ -347,6 +365,55 @@
       // também avança clicando na foto, por garantia
       single.addEventListener("click", next);
     });
+
+    const bgAudio = document.getElementById("bgAudio");
+const audioBtn = document.getElementById("audioBtn");
+
+const playlist = ["a1.mp3", "a2_hand.mp3", "a3_cera.mp3", "a4_barao.mp3"];
+let track = 0;
+
+function loadTrack() {
+  bgAudio.src = playlist[track];
+  bgAudio.load();
+}
+
+function setBtnLabel() {
+  audioBtn.textContent = bgAudio.paused ? "Ativar som 🎵" : "Pausar som 🔇";
+}
+
+async function startAudio() {
+  try {
+    bgAudio.volume = 0.25;
+    if (!bgAudio.src) loadTrack();
+    await bgAudio.play();
+    setBtnLabel();
+  } catch (e) {
+    setBtnLabel();
+  }
+}
+
+bgAudio.addEventListener("ended", () => {
+  track = (track + 1) % playlist.length;
+  loadTrack();
+  bgAudio.play().catch(() => {});
+});
+
+audioBtn.addEventListener("click", async () => {
+  if (bgAudio.paused) await startAudio();
+  else { bgAudio.pause(); setBtnLabel(); }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  setBtnLabel();
+  const once = async () => {
+    await startAudio();
+    document.removeEventListener("click", once);
+    document.removeEventListener("touchstart", once);
+  };
+  document.addEventListener("click", once);
+  document.addEventListener("touchstart", once);
+});
+
   </script>
 </body>
 </html>
